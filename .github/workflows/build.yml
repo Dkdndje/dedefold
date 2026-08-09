@@ -53,4 +53,24 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: defold-engine-arm64-android
-          path: share/
+          path: tmp/dynamo_home/
+
+      - name: Build Bob (embed local engine into bob.jar)
+        run: |
+          python scripts/build.py build_bob --skip-tests
+
+      - name: Bundle APK with Bob
+        run: |
+          java -jar com.dynamo.cr/com.dynamo.cr.bob/dist/bob.jar \
+            --root com.dynamo.cr/com.dynamo.cr.bob.test/test/proj \
+            --platform arm64-android \
+            --archive \
+            --bundle-output ./apk-output \
+            build bundle
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: defold-arm64-android-apk
+          path: apk-output/
+          
