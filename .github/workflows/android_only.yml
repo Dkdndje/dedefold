@@ -28,12 +28,15 @@ jobs:
           pip install cmake ninja
 
       - name: Install Defold External Dependencies
+        env:
+          DEFOLD_HOME: ${{ github.workspace }}
         run: |
           python scripts/build.py install_ext
 
       - name: Build Engine for arm64-android
         env:
-          ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path || env.ANDROID_NDK_LATEST_HOME }}
+          DEFOLD_HOME: ${{ github.workspace }}
+          ANDROID_NDK_ROOT: ${{ env.ANDROID_NDK_LATEST_HOME }}
         run: |
           python scripts/build.py build_engine --platform=arm64-android
 
