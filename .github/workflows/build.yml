@@ -22,10 +22,10 @@ jobs:
           distribution: 'oracle'
           java-version: '25'
 
-      - name: Set up Android SDK & NDK
-        uses: nsetup/setup-android-ndk@v1
-        with:
-          ndk-version: r26b
+      - name: Set up Android NDK
+        run: |
+          echo "y" | sudo ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager --install "ndk;26.1.10909125"
+          echo "ANDROID_NDK_HOME=${ANDROID_SDK_ROOT}/ndk/26.1.10909125" >> $GITHUB_ENV
 
       - name: Install System Dependencies
         run: |
