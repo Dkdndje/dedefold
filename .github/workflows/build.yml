@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DEFOLD_HOME: ${{ github.workspace }}
+      DYNAMO_HOME: ${{ github.workspace }}/tmp/dynamo_home
+      PYTHONPATH: ${{ github.workspace }}/tmp/dynamo_home/lib/python:${{ github.workspace }}/build_tools:${{ github.workspace }}/tmp/dynamo_home/ext/lib/python
 
     steps:
       - name: Checkout Repository
