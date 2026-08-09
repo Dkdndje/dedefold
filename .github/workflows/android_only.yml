@@ -30,12 +30,15 @@ jobs:
       - name: Install Defold External Dependencies
         env:
           DEFOLD_HOME: ${{ github.workspace }}
+          DYNAMO_HOME: ${{ github.workspace }}/tmp/dynamo
         run: |
+          mkdir -p tmp/dynamo
           python scripts/build.py install_ext
 
       - name: Build Engine for arm64-android
         env:
           DEFOLD_HOME: ${{ github.workspace }}
+          DYNAMO_HOME: ${{ github.workspace }}/tmp/dynamo
           ANDROID_NDK_ROOT: ${{ env.ANDROID_NDK_LATEST_HOME }}
         run: |
           python scripts/build.py build_engine --platform=arm64-android
