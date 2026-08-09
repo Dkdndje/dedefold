@@ -27,6 +27,11 @@ jobs:
         with:
           ndk-version: r26b
 
+      - name: Install System Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libx11-dev libxext-dev libxi-dev
+
       - name: Install Python Dependencies & CMake
         run: |
           python -m pip install --upgrade pip
