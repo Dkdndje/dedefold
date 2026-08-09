@@ -6,6 +6,8 @@ on:
 jobs:
   build-android:
     runs-on: ubuntu-latest
+    env:
+      DEFOLD_HOME: ${{ github.workspace }}
 
     steps:
       - name: Checkout Repository
