@@ -59,10 +59,57 @@ jobs:
         run: |
           python scripts/build.py build_bob --skip-tests
 
+      - name: Create Demo Project
+        run: |
+          rm -rf demo_project
+          cp -r com.dynamo.cr/com.dynamo.cr.bob.test/test/proj demo_project
+          sed -i 's/title = TMP/title = DedefoldDemo/' demo_project/game.project
+
+          cat > demo_project/main/hello.label << 'EOF'
+          text: 'Merhaba dedefold!'
+          font: '/builtins/fonts/default.font'
+          material: '/builtins/fonts/label-df.material'
+          size { x: 600 y: 100 z: 0 }
+          color { x: 1 y: 1 z: 1 w: 1 }
+          outline { x: 0 y: 0 z: 0 w: 1 }
+          shadow { x: 0 y: 0 z: 0 w: 1 }
+          leading: 1.0
+          tracking: 0.0
+          pivot: PIVOT_CENTER
+          blend_mode: BLEND_MODE_ALPHA
+          line_break: false
+          EOF
+
+          cat > demo_project/main/main.go << 'EOF'
+          components {
+            id: "label"
+            component: "/main/hello.label"
+          }
+          EOF
+
+          cat > demo_project/main/main.collection << 'EOF'
+          name: "main"
+          instances {
+            id: "go"
+            prototype: "/main/main.go"
+            position {
+              x: 480.0
+              y: 320.0
+              z: 0.0
+            }
+            rotation {
+              x: 0.0
+              y: 0.0
+              z: 0.0
+              w: 1.0
+            }
+          }
+          EOF
+
       - name: Bundle APK with Bob
         run: |
           java -jar com.dynamo.cr/com.dynamo.cr.bob/dist/bob.jar \
-            --root com.dynamo.cr/com.dynamo.cr.bob.test/test/proj \
+            --root demo_project \
             --platform arm64-android \
             --architectures arm64-android \
             --archive \
