@@ -64,6 +64,7 @@ jobs:
           java -jar com.dynamo.cr/com.dynamo.cr.bob/dist/bob.jar \
             --root com.dynamo.cr/com.dynamo.cr.bob.test/test/proj \
             --platform arm64-android \
+            --architectures arm64-android \
             --archive \
             --bundle-output ./apk-output \
             build bundle
@@ -73,4 +74,3 @@ jobs:
         with:
           name: defold-arm64-android-apk
           path: apk-output/
-          
